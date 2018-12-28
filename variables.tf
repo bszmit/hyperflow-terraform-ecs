@@ -67,7 +67,8 @@ variable "SECRET_ACCESS_KEY"
 
 variable "hyperflow_master_container"
 {
-  default = "krysp89/hyperflow-master-plugin:latest"
+//  default = "krysp89/hyperflow-master-plugin:latest"
+  default = "bszmit/hyperflow-master-plugin:latest"
 }
 
 variable "hyperflow_worker_container"

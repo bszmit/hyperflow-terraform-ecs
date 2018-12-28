@@ -25,6 +25,27 @@ resource "aws_security_group" "sg-hyperflow" {
     cidr_blocks = ["0.0.0.0/0"]
   }
 
+  ingress {
+    from_port = "3002"
+    to_port = "3002"
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = "3003"
+    to_port = "3003"
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  ingress {
+    from_port = "3004"
+    to_port = "3004"
+    protocol = "tcp"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
   # Inbound ssh
   ingress {
     from_port = "22"

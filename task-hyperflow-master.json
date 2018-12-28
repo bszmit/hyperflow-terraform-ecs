@@ -12,6 +12,18 @@
         {
           "containerPort": ${rabbitmq_managment_port},
           "hostPort": ${rabbitmq_managment_port}
+        },
+        {
+          "containerPort": ${port3002},
+          "hostPort": ${port3002}
+        },
+        {
+          "containerPort": ${port3003},
+          "hostPort": ${port3003}
+        },
+        {
+          "containerPort": ${port3004},
+          "hostPort": ${port3004}
         }
       ],
       "environment": [

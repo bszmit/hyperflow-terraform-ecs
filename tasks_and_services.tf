@@ -59,6 +59,9 @@ data "template_file" "task_definition_hyperflow_master" {
     acess_key         = "${var.ACCESS_KEY}"
     secret_key        = "${var.SECRET_ACCESS_KEY}"
     rabbitmq_managment_port = "${var.server_plugin_port}"
+    port3002 = "3002"
+    port3003 = "3003"
+    port3004 = "3004"
   }
 }
 
