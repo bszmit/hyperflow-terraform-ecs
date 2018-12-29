@@ -12,6 +12,7 @@ data "template_file" "task_definition_hyperflow_worker" {
     influxdb_url     = "${var.influx_db_url}"
     feature_download = "${var.feature_download}"
     nfs_mount        = "${var.nfs_mount}"
+    prometheus_pushgateway = "${var.prometheus_pushgateway}"
   }
 }
 

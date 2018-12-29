@@ -73,7 +73,8 @@ variable "hyperflow_master_container"
 
 variable "hyperflow_worker_container"
 {
-  default = "krysp89/hyperflow-worker-nfs:latest"
+//  default = "krysp89/hyperflow-worker-nfs:latest"
+  default = "bszmit/hyperflow-amqp-executor"
 }
 
 variable "ec2_status_reporter"
@@ -89,6 +90,11 @@ variable "feature_download"
 }
 
 variable "nfs_mount"
+{
+  default = ""
+}
+
+variable "prometheus_pushgateway"
 {
   default = ""
 }
