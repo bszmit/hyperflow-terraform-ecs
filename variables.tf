@@ -98,3 +98,5 @@ variable "prometheus_pushgateway"
 {
   default = ""
 }
+
+variable "ssh_private_key_path" {}
