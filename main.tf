@@ -44,7 +44,7 @@ resource "aws_ecs_cluster" "hyperflow_cluster" {
 }
 
 resource "aws_instance" "prometheus-pushgateway" {
-  ami             = "ami-02cbcca4c728e1742"
+  ami             = "ami-0f9cf087c1f27d9b1"
   instance_type   = "t2.micro"
   key_name        = "${var.key_pair_name}"
   security_groups = [
@@ -54,8 +54,21 @@ resource "aws_instance" "prometheus-pushgateway" {
     Name = "prometheus-pushgateway"
   }
 
+  provisioner "file" {
+    source      = "conf/install_docker.sh"
+    destination = "/tmp/install_docker.sh"
+
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file(var.ssh_private_key_path)}"
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "sudo chmod +x /tmp/install_docker.sh",
+      "/tmp/install_docker.sh",
       "sudo docker run -d -p 9091:9091 prom/pushgateway",
     ]
     connection {
@@ -67,7 +80,7 @@ resource "aws_instance" "prometheus-pushgateway" {
 }
 
 resource "aws_instance" "prometheus-grafana" {
-  ami             = "ami-02cbcca4c728e1742"
+  ami             = "ami-0f9cf087c1f27d9b1"
   instance_type   = "t2.micro"
   key_name        = "${var.key_pair_name}"
   security_groups = [
@@ -77,8 +90,22 @@ resource "aws_instance" "prometheus-grafana" {
     Name = "prometheus-grafana"
   }
 
+  provisioner "file" {
+    source      = "conf/install_docker.sh"
+    destination = "/tmp/install_docker.sh"
+
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file(var.ssh_private_key_path)}"
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "sudo chmod +x /tmp/install_docker.sh",
+      "/tmp/install_docker.sh",
+      "git clone https://github.com/bszmit/hyperflow-grafana-prometheus.git",
       "cd hyperflow-grafana-prometheus/",
       "sudo HYPERFLOW_HOST=${aws_instance.hyperflowmaster.public_ip} PROMETHEUS_GATEWAY_HOST=${aws_instance.prometheus-pushgateway.public_ip} docker-compose up -d",
     ]
@@ -91,7 +118,7 @@ resource "aws_instance" "prometheus-grafana" {
 }
 
 resource "aws_instance" "influx-grafana" {
-  ami             = "ami-02cbcca4c728e1742"
+  ami             = "ami-0f9cf087c1f27d9b1"
   instance_type   = "t2.micro"
   key_name        = "${var.key_pair_name}"
   security_groups = [
@@ -101,8 +128,22 @@ resource "aws_instance" "influx-grafana" {
     Name = "influx-grafana"
   }
 
+  provisioner "file" {
+    source      = "conf/install_docker.sh"
+    destination = "/tmp/install_docker.sh"
+
+    connection {
+      type = "ssh"
+      user = "ubuntu"
+      private_key = "${file(var.ssh_private_key_path)}"
+    }
+  }
+
   provisioner "remote-exec" {
     inline = [
+      "sudo chmod +x /tmp/install_docker.sh",
+      "/tmp/install_docker.sh",
+      "git clone https://github.com/krystianpawlik/hyperflow-grafana.git --recurse-submodules",
       "cd hyperflow-grafana/",
       "sudo docker-compose up -d",
     ]
